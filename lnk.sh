@@ -1,3 +1,3 @@
 # Create links to dotfiles
-ln -s ~/.vimrc ~/.cfg/.vimrc
-ln -s ~/.zshrc ~/.cfg/.zshrc
+ln -s ~/.cfg/.vimrc ~/.vimrc
+ln -s ~/.cfg/.zshrc ~/.zshrc
