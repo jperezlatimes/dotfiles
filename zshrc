@@ -9,9 +9,6 @@ export ZSH=/Users/jdperez/.oh-my-zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
@@ -26,14 +23,6 @@ COMPLETION_WAITING_DOTS="true"
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # -------------------------------------------------------------------
 # Python virtualenvwrapper setup
@@ -70,7 +59,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Easily switch primary foreground/background colors
 DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
-#DEFAULT_COLOR=$DEFAULT_FOREGROUND
 
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
@@ -83,11 +71,6 @@ POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
 POWERLEVEL9K_ALWAYS_SHOW_USER=true
 
 POWERLEVEL9K_CONTEXT_TEMPLATE="\uF109 %m"
-
-#POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="$DEFAULT_FOREGROUND"
-#POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="$DEFAULT_BACKGROUND"
-#POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND="$DEFAULT_FOREGROUND"
-#POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND="$DEFAULT_BACKGROUND"
 
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="\uE0B4"
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR="%F{$(( $DEFAULT_BACKGROUND - 2 ))}|%f"
@@ -107,11 +90,21 @@ POWERLEVEL9K_VIRTUALENV_BACKGROUND=17
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user root_indicator context dir_writable dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status time ssh)
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 # aliases
 alias zshconfig="vim ~/.zshrc"
 
-# Load setting from old bash profile
-[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
+# Ship a python package to different pypi profiles
+ship() {
+  echo "$1"
+  if [ "$1" == "publish" ]; then
+    python setup.py sdist bdist_wheel
+    twine upload dist/*
+  elif [ -z $1 ]; then
+    python setup.py sdist bdist_wheel
+    twine upload dist/* --skip-existing
+  else
+    echo "shipping library $1"
+    python setup.py sdist bdist_wheel
+    twine upload dist/* -r "$1" --skip-existing
+  fi
+}
