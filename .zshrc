@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/jdperez/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -27,10 +27,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # -------------------------------------------------------------------
 # Python virtualenvwrapper setup
 # -------------------------------------------------------------------
-source /usr/local/bin/virtualenvwrapper.sh
-export WORKON_HOME=$HOME/.virtualenvs
-VIRTUALENVWRAPPER_WORKON_CD=1
-VIRTUAL_ENV_DISABLE_PROMPT=0
+#source /usr/local/bin/virtualenvwrapper.sh
+#export WORKON_HOME=$HOME/.virtualenvs
+#VIRTUALENVWRAPPER_WORKON_CD=1
+#VIRTUAL_ENV_DISABLE_PROMPT=0
 
 alias mkenv='mkvirtualenv'
 alias off="deactivate"
@@ -41,15 +41,15 @@ alias on="workon"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  npm
-  node
+  #npm
+  #node
   history
-  pip
-  virtualenv
-  virtualenvwrapper
-  redis-cli
+  #pip
+  #virtualenv
+  #virtualenvwrapper
+  #redis-cli
   common-aliases
-  osx
+  #osx
 )
 source $ZSH/oh-my-zsh.sh
 
