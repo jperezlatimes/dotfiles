@@ -1,61 +1,67 @@
-# If you come from bash you might have to change your $PATH.
+# -------------------------------------------------------------------
+# Base Setup
+# -------------------------------------------------------------------
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # -------------------------------------------------------------------
-# Python virtualenvwrapper setup
+# Options
 # -------------------------------------------------------------------
-#source /usr/local/bin/virtualenvwrapper.sh
-#export WORKON_HOME=$HOME/.virtualenvs
-#VIRTUALENVWRAPPER_WORKON_CD=1
-#VIRTUAL_ENV_DISABLE_PROMPT=0
+setopt extended_history         # Also record time and duration of commands.
+setopt share_history            # Share history between multiple shells
+setopt hist_find_no_dups        # Dont display duplicates during searches.
+setopt hist_ignore_dups         # Ignore consecutive duplicates.
 
-alias mkenv='mkvirtualenv'
-alias off="deactivate"
-alias on="workon"
+# -------------------------------------------------------------------
+# Completions
+# -------------------------------------------------------------------
+autoload -Uz compinit
+compinit
 
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# -------------------------------------------------------------------
+# Bundled plugins
+# -------------------------------------------------------------------
+
 plugins=(
   git
-  #npm
-  #node
+  pip
+  npm
+  node
+  sudo
   history
-  #pip
-  #virtualenv
-  #virtualenvwrapper
-  #redis-cli
+  virtualenv
+  redis-cli
+  docker
+  docker-compose
   common-aliases
+  colorize
+  #tmux
+  #tmuxinator
+  archlinux
   #osx
 )
 source $ZSH/oh-my-zsh.sh
 
 # -------------------------------------------------------------------
-# Powerlevel9k Setup
+# Custom plugins
 # -------------------------------------------------------------------
+if [ ! -d $ZSH_CUSTOM/plugins/zsh-completions ]; then
+	sudo git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions	
+fi
+
+if [ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]; then
+	sudo git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+# -------------------------------------------------------------------
+# Theme
+# -------------------------------------------------------------------
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Easily switch primary foreground/background colors
 DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
@@ -90,8 +96,16 @@ POWERLEVEL9K_VIRTUALENV_BACKGROUND=17
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user root_indicator context dir_writable dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status time ssh)
 
-# aliases
-alias zshconfig="vim ~/.zshrc"
+# -------------------------------------------------------------------
+# Aliases
+# -------------------------------------------------------------------
+alias mkenv='virtualenv'
+alias off="deactivate"
+alias search="sudo find / -name"
+alias zshconfig="vim ~/.cfg/.zshrc"
+
+# Set Java Home var
+export JAVA_HOME=/usr/lib/jvm/default
 
 # Ship a python package to different pypi profiles
 ship() {
