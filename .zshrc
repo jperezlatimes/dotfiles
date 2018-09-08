@@ -4,6 +4,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH=~/.oh-my-zsh
 
+ZSH_THEME="powerlevel9k/powerlevel9k"
 HYPHEN_INSENSITIVE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
@@ -26,7 +27,6 @@ compinit
 # -------------------------------------------------------------------
 # Bundled plugins
 # -------------------------------------------------------------------
-
 plugins=(
   git
   pip
@@ -40,10 +40,7 @@ plugins=(
   docker-compose
   common-aliases
   colorize
-  #tmux
-  #tmuxinator
   archlinux
-  #osx
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -58,12 +55,6 @@ if [ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]; then
 	sudo git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 fi
 
-# -------------------------------------------------------------------
-# Theme
-# -------------------------------------------------------------------
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
-# Easily switch primary foreground/background colors
 DEFAULT_FOREGROUND=006 DEFAULT_BACKGROUND=235
 
 POWERLEVEL9K_MODE="nerdfont-complete"
