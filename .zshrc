@@ -98,9 +98,23 @@ alias zshconfig="vim ~/.cfg/.zshrc"
 # Set Java Home var
 export JAVA_HOME=/usr/lib/jvm/default
 
+# Set up NVM
+source /usr/share/nvm/init-nvm.sh
+
+# Install an AUR repo package
+auryn() {
+  if [ -z "$1" ]; then
+    echo "No AUR package specified"
+  else
+    cd ~/Downloads
+    git clone "https://aur.archlinux.org/$1.git"
+    cd "$1"
+    makepkg -Acs && sudo pacman -U *.pkg.tar.xz
+  fi
+}
+
 # Ship a python package to different pypi profiles
 ship() {
-  echo "$1"
   if [ "$1" == "publish" ]; then
     python setup.py sdist bdist_wheel
     twine upload dist/*
