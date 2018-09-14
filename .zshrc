@@ -110,7 +110,8 @@ auryn() {
     git clone "https://aur.archlinux.org/$1.git"
     cd "$1"
     makepkg -Acs && sudo pacman -U *.pkg.tar.xz
-  fi
+    cd ~/Downlaods && sudo rm -r "$1" 
+ fi
 }
 
 # Ship a python package to different pypi profiles
