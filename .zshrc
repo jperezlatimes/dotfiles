@@ -95,6 +95,8 @@ alias off="deactivate"
 alias search="sudo find / -name"
 alias zshconfig="vim ~/.cfg/.zshrc"
 
+alias lat="cd ~/latimes"
+
 # Set Java Home var
 export JAVA_HOME=/usr/lib/jvm/default
 
