@@ -11,6 +11,14 @@ COMPLETION_WAITING_DOTS="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # -------------------------------------------------------------------
+# History file
+# -------------------------------------------------------------------
+if [ ! -f ~/.dotfiles/.zhist ]; then
+  touch ~/.dotfiles/.zhist
+fi
+HISTFILE=~/.dotfiles/.zhist
+
+# -------------------------------------------------------------------
 # Options
 # -------------------------------------------------------------------
 setopt extended_history         # Also record time and duration of commands.
@@ -90,18 +98,17 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs statu
 # -------------------------------------------------------------------
 # Aliases
 # -------------------------------------------------------------------
-alias mkenv='virtualenv'
+alias mkenv="virtualenv"
 alias off="deactivate"
 alias search="sudo find / -name"
-alias zshconfig="vim ~/.cfg/.zshrc"
-
-alias lat="cd ~/latimes"
+alias zshconfig="vim ~/.dotfiles/.zshrc"
+alias zshupdate="source ~/.zshrc"
 
 # Set Java Home var
-export JAVA_HOME=/usr/lib/jvm/default
+export JAVA_HOME=/usr/lib/jvm/default || echo "JVM not installed"
 
 # Set up NVM
-source /usr/share/nvm/init-nvm.sh
+source /usr/share/nvm/init-nvm.sh || "NVM not installed"
 
 # Install an AUR repo package
 auryn() {
