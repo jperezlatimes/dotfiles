@@ -16,7 +16,15 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 if [ ! -f ~/.dotfiles/.zhist ]; then
   touch ~/.dotfiles/.zhist
 fi
-HISTFILE=~/.dotfiles/.zhist
+export HISTFILE=~/.dotfiles/.zhist
+
+# -------------------------------------------------------------------
+# Environment Variables file
+# -------------------------------------------------------------------
+if [ ! -f ~/.zsh_envvars ]; then
+  touch ~/.zsh_envvars
+fi
+export source ~/.zsh_envvars
 
 # -------------------------------------------------------------------
 # Options
@@ -98,14 +106,13 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs statu
 # -------------------------------------------------------------------
 # Aliases
 # -------------------------------------------------------------------
-alias mkenv="virtualenv"
-alias off="deactivate"
 alias search="sudo find / -name"
 alias zshconfig="vim ~/.dotfiles/.zshrc"
 alias zshupdate="source ~/.zshrc"
+alias zshenvars=" sudo vim ~/.zsh_envvars"
 
 # Set Java Home var
-export JAVA_HOME=/usr/lib/jvm/default || echo "JVM not installed"
+# export JAVA_HOME=/usr/lib/jvm/default || echo "JVM not installed"
 
 # Set up NVM
 source /usr/share/nvm/init-nvm.sh || "NVM not installed"
