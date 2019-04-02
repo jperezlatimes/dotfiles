@@ -1,0 +1,119 @@
+# -------------------------------------------------------------------
+# Base Setup
+# -------------------------------------------------------------------
+export ZSH=~/.oh-my-zsh
+
+# -------------------------------------------------------------------
+# History file
+# -------------------------------------------------------------------
+if [ ! -f ~/.dotfiles/.zhist ]; then
+  touch ~/.dotfiles/.zhist
+fi
+
+# -------------------------------------------------------------------
+# Environment Variables file
+# -------------------------------------------------------------------
+if [ ! -f ~/.dotfiles/.zvars ]; then
+  touch ~/.dotfiles/.zvars
+fi
+export source ~/.zvars
+
+# -------------------------------------------------------------------
+# Options
+# -------------------------------------------------------------------
+setopt extended_history         # Also record time and duration of commands.
+setopt share_history            # Share history between multiple shells
+setopt hist_find_no_dups        # Dont display duplicates during searches.
+setopt hist_ignore_dups         # Ignore consecutive duplicates.
+
+# -------------------------------------------------------------------
+# Completions
+# -------------------------------------------------------------------
+autoload -Uz compinit
+compinit
+
+# -------------------------------------------------------------------
+# ZSH vars
+# -------------------------------------------------------------------
+HISTFILE=~/.dotfiles/.zhist
+ZSH_THEME="robbyrussell"
+HYPHEN_INSENSITIVE="true"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# -------------------------------------------------------------------
+# Bundled plugins
+# -------------------------------------------------------------------
+plugins=(
+  git
+  pip
+  npm
+  node
+  sudo
+  history
+  virtualenv
+  redis-cli
+  docker
+  docker-compose
+  common-aliases
+  colorize
+  archlinux
+)
+source $ZSH/oh-my-zsh.sh
+
+# -------------------------------------------------------------------
+# Custom plugins
+# -------------------------------------------------------------------
+if [ ! -d $ZSH_CUSTOM/plugins/zsh-completions ]; then
+	sudo git clone https://github.com/zsh-users/zsh-completions $ZSH_CUSTOM/plugins/zsh-completions	
+fi
+
+if [ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]; then
+	sudo git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+# -------------------------------------------------------------------
+# Aliases
+# -------------------------------------------------------------------
+alias search="sudo find / -name"
+alias zshconfig="vim ~/.dotfiles/.zshrc"
+alias zshupdate="source ~/.zshrc"
+alias zshenvvars="vim ~/.dotfiles/.zvars"
+
+# -------------------------------------------------------------------
+# NVM
+# -------------------------------------------------------------------
+source /usr/share/nvm/init-nvm.sh || "NVM not installed"
+
+# -------------------------------------------------------------------
+# Auryn
+# -------------------------------------------------------------------
+auryn() {
+  if [ -z "$1" ]; then
+    echo "No AUR package specified"
+  else
+    cd ~/Downloads
+    git clone "https://aur.archlinux.org/$1.git"
+    cd "$1"
+    makepkg -Acs && sudo pacman -U *.pkg.tar.xz
+    cd ~/Downloads && sudo rm -r "$1" 
+ fi
+}
+
+# -------------------------------------------------------------------
+# Ship It
+# -------------------------------------------------------------------
+ship() {
+  if [ "$1" == "publish" ]; then
+    python setup.py sdist bdist_wheel
+    twine upload dist/*
+  elif [ -z $1 ]; then
+    python setup.py sdist bdist_wheel
+    twine upload dist/* --skip-existing
+  else
+    echo "shipping library $1"
+    python setup.py sdist bdist_wheel
+    twine upload dist/* -r "$1" --skip-existing
+  fi
+}
