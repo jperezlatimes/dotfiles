@@ -86,7 +86,9 @@ alias zshenvvars="vim ~/.dotfiles/.zvars"
 # -------------------------------------------------------------------
 # NVM
 # -------------------------------------------------------------------
-source /usr/share/nvm/init-nvm.sh || "NVM not installed"
+if [ -d /usr/share/nvm ]; then
+  source /usr/share/nvm/init-nvm.sh
+fi
 
 # -------------------------------------------------------------------
 # Auryn
