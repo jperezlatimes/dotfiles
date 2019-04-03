@@ -11,15 +11,15 @@ mv ~/.vimrc ~/.dotfiles/backup/.vimrc || echo "No .vimrc file to move"
 
 # Write zshrc file with theme link
 sudo rm -f .zshrc && touch .zshrc
-echo "export source ~/.zshrc-base" >> .zshrc
+echo "source ~/.dotfiles/.zshrc-base" >> .zshrc
 
 # If theme is specified, add it
-if [ "$0" != "" ]; then
-  if [ ! -f .zshrc-$0 ]; then
-    echo "ZSH theme $0 not supported, using default. Supported themes: spaceship, powerlevel9k"
+if [ "$1" != "" ]; then
+  if [ ! -f .zshrc-$1 ]; then
+    echo "ZSH theme $1 not supported, using default. Supported themes: spaceship, powerlevel9k"
   else
-    echo "Initializing ZSH profile with $0 theme."
-    echo "export source ~/.zshrc-$0" >> .zshrc
+    echo "Initializing ZSH profile with $1 theme."
+    echo "source ~/.dotfiles/.zshrc-$1" >> .zshrc
   fi
 fi
 
