@@ -9,9 +9,8 @@ fi
 mv ~/.zshrc ~/.dotfiles/backup/.zshrc || echo "No .zshrc file to move"
 mv ~/.vimrc ~/.dotfiles/backup/.vimrc || echo "No .vimrc file to move"
 
-# Write zshrc file with theme link
+# Create a new zshrc file and source theme and base
 sudo rm -f .zshrc && touch .zshrc
-echo "source ~/.dotfiles/.zshrc-base" >> .zshrc
 
 # If theme is specified, add it
 if [ "$1" != "" ]; then
@@ -22,6 +21,9 @@ if [ "$1" != "" ]; then
     echo "source ~/.dotfiles/.zshrc-$1" >> .zshrc
   fi
 fi
+
+# Add the base configuration
+echo "source ~/.dotfiles/.zshrc-base" >> .zshrc
 
 # Create symlinks to new dotfiles
 ln -s ~/.dotfiles/.vimrc ~/.vimrc
